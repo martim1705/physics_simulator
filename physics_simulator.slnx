@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="physics_simulator/physics_simulator.vcxproj" Id="fd6a3feb-7d75-4c4b-add0-2ced6b822026">
+    <Platform Solution="Debug|x64" Project="Win32" />
+  </Project>
+</Solution>
