@@ -13,7 +13,6 @@ int main()
     shape.setOrigin({ 50.f, 50.f });
 
     float dt = 0.1;
-    float yp = 0;
     float x = 360.f; 
     float y = 240.f;
     float yf;
@@ -36,10 +35,10 @@ int main()
         shape.setPosition({ x, yf});
 
         sf::Vector2f final_position = shape.getPosition();
-        if (final_position.y >= 460.f) {
+        if (final_position.y >= 450.f) {
             vy = -vy;
         }
-        else if (final_position.y <= 0.f) {
+        else if (final_position.y <= 10.f) {
             vy = -vy; 
         }
         // limpar e desenhar
