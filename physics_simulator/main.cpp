@@ -15,17 +15,22 @@ int main()
     // colocar a origem no centro do círculo 
     shape.setOrigin({ 50.f, 50.f });
 
-    float dt = 0.1;
+    sf::Clock clock; 
+    
     float x = 360.f; 
     float y = 240.f;
     float yf, xf;
-    float vy = 0.1;
+    float vy = 240; // pixel / segundo
     float vx = 0; 
     // posicionar na janela 
     shape.setPosition({ x, y });
     // loop principal
     while (window.isOpen())
     {
+
+        // tempo 
+        sf::Time elapsed = clock.restart(); 
+        float dt = elapsed.asSeconds(); 
         // eventos
         while (const std::optional event = window.pollEvent())
         {
@@ -40,24 +45,31 @@ int main()
         shape.setPosition({ xf, yf});
         sf::Vector2f final_position = shape.getPosition();
         
-        
-        if (final_position.y >= 450.f) { // colisões para o "chão"
+
+        if (final_position.y >= 430.f) { // colisões para o "chão"
             vy = -vy;
         }
-        else if (final_position.y <= 10.f) { // colisões para o "teto"
+        else if (final_position.y <= 50.f) { // colisões para o "teto"
             vy = -vy; 
         }
 
-        // se a tecla da esquerda é selecionada, bola move-se paar
+        if (final_position.x <= 50.0f) {
+            vx = 120; 
+        }
+        else if (final_position.x >= 670.0f) {
+            vx = -120; 
+        }
+
+        // se a tecla da esquerda é selecionada, bola move-se para a esquerda
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-            vx = -1.1;
-             
+            vx = -120;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+            vx = 120; 
         }
         // limpar e desenhar
         window.clear();
         window.draw(shape);
         window.display();
-
-        dt += 0.1; 
     }
 }
