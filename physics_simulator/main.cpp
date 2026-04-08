@@ -48,6 +48,7 @@ int main()
             vy = -vy; 
         }
 
+        // se a tecla da esquerda é selecionada, bola move-se paar
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
             vx = -1.1;
              
