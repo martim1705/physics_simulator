@@ -1,5 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <iostream>
+
+
 int main()
 {
     // janela - cria a janela com tamanho e título
@@ -15,9 +18,9 @@ int main()
     float dt = 0.1;
     float x = 360.f; 
     float y = 240.f;
-    float yf;
+    float yf, xf;
     float vy = 0.1;
-
+    float vx = 0; 
     // posicionar na janela 
     shape.setPosition({ x, y });
     // loop principal
@@ -32,14 +35,22 @@ int main()
         }
         sf::Vector2f initial_position = shape.getPosition();
         yf = initial_position.y + vy * dt;
-        shape.setPosition({ x, yf});
+        xf = initial_position.x + vx * dt; 
 
+        shape.setPosition({ xf, yf});
         sf::Vector2f final_position = shape.getPosition();
-        if (final_position.y >= 450.f) {
+        
+        
+        if (final_position.y >= 450.f) { // colisões para o "chão"
             vy = -vy;
         }
-        else if (final_position.y <= 10.f) {
+        else if (final_position.y <= 10.f) { // colisões para o "teto"
             vy = -vy; 
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+            vx = -1.1;
+             
         }
         // limpar e desenhar
         window.clear();
