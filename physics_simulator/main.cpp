@@ -3,6 +3,12 @@
 #include <iostream>
 
 
+float g = 2354.4f; // pixels / segundo^2
+float perda_energia = 0.8; 
+
+
+// energia cinetica = 1/2 * m * v^2
+
 int main()
 {
     // janela - cria a janela com tamanho e título
@@ -21,9 +27,15 @@ int main()
     float y = 240.f;
     float yf, xf;
     float vy = 240; // pixel / segundo
-    float vx = 0; 
+    float vx = 0;
+     
     // posicionar na janela 
     shape.setPosition({ x, y });
+
+
+
+
+
     // loop principal
     while (window.isOpen())
     {
@@ -31,23 +43,33 @@ int main()
         // tempo 
         sf::Time elapsed = clock.restart(); 
         float dt = elapsed.asSeconds(); 
+
+
+
         // eventos
         while (const std::optional event = window.pollEvent())
         {
+
+
             // fechar a janela 
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
+
+        // velocidade 
+        vy +=  g * dt;
+
         sf::Vector2f initial_position = shape.getPosition();
         yf = initial_position.y + vy * dt;
         xf = initial_position.x + vx * dt; 
 
-        shape.setPosition({ xf, yf});
+        
         sf::Vector2f final_position = shape.getPosition();
         
 
-        if (final_position.y >= 430.f) { // colisões para o "chão"
-            vy = -vy;
+        if (final_position.y > 430.f) { // colisões para o "chão
+            yf = 430.0f;
+            vy = -(perda_energia * vy);
         }
         else if (final_position.y <= 50.f) { // colisões para o "teto"
             vy = -vy; 
@@ -67,6 +89,9 @@ int main()
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
             vx = 120; 
         }
+
+        shape.setPosition({ xf, yf });
+
         // limpar e desenhar
         window.clear();
         window.draw(shape);
